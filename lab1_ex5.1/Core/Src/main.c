@@ -87,7 +87,8 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
-  int count = 9;
+  int count = 5;
+  int state = 0;
   HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_4);
   HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_6);
   HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_7);
@@ -102,7 +103,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  if(count == 9){
+	  if(state == 0 && count == 5){
 		  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_4);
 		  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
 		  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_7);
@@ -112,13 +113,13 @@ int main(void)
 		  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_13);
 		  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_15);
 	  }
-	  if(count == 6){
+	  if(state == 1 && count == 2){
 		  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_11);
 		  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_12);
 		  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_14);
 		  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_15);
 	  }
-	  if(count == 4){
+	  if(state == 2 && count == 3){
 		  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_4);
 		  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_6);
 		  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_7);
@@ -128,7 +129,7 @@ int main(void)
 		  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_13);
 		  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_14);
 	  }
-	  if(count == 1){
+	  if(state == 3 && count == 2){
 		  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
 		  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_6);
 		  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_8);
@@ -136,7 +137,22 @@ int main(void)
 	  }
     /* USER CODE END WHILE */
 	  display7SEG(count--);
-	  if(count <= -1) count = 9;
+	  if(count <= -1 && state == 0){
+		  count = 2;
+		  state++;
+	  }
+	  if(count <= -1 && state == 1){
+		  count = 3;
+		  state++;
+	  }
+	  if(count <= -1 && state == 2){
+		  count = 2;
+		  state++;
+	  }
+	  if(count <= -1 && state == 3){
+		  count = 5;
+		  state = 0;
+	  }
 	  HAL_Delay(1000);
     /* USER CODE BEGIN 3 */
   }
